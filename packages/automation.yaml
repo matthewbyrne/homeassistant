@@ -1,0 +1,207 @@
+################################################
+## Automation
+################################################
+automation:
+  - alias: Turn off lights & heating 20 mins after everyone leaves
+    trigger:
+      platform: state
+      entity_id: group.people
+      to: 'not_home'
+      for:
+        minutes: 20
+    action:
+      - service: light.turn_off
+        entity_id: group.all_lights
+      - service: switch.turn_off
+        entity_id: 
+          - switch.attic_light
+          - switch.christmas_tree
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.downstairs
+          away_mode: true
+
+  - alias: Set heating to home when people are home
+    trigger:
+      platform: state
+      entity_id: group.people
+      to: 'home'
+    action:
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.downstairs
+          away_mode: false
+
+  - alias: Turn on lights when home if after sunset
+    trigger:
+      platform: state
+      entity_id: group.people
+      to: 'home'
+    condition:
+      condition: state
+      entity_id: binary_sensor.bright_outside
+      state: 'off'
+    action:
+      - service: light.turn_on
+        entity_id: light.downstairs_hall_lamp
+      - service: switch.turn_on
+        entity_id: switch.christmas_tree
+      - service: climate.set_away_mode
+        data: 
+          entity_id: climate.downstairs
+          away_mode: false
+
+  - alias: Turn on lights when sunset if someones home
+    trigger:
+      platform: state
+      entity_id: binary_sensor.bright_outside
+      from: 'on'
+      to: 'off'
+    condition:
+      - condition: state
+        entity_id: group.people
+        state: 'home'
+    action:
+      - service: light.turn_on
+        entity_id: light.downstairs_hall_lamp
+      - service: switch.turn_on
+        entity_id: switch.christmas_tree
+      - service: climate.set_away_mode
+        data: 
+          entity_id: climate.downstairs
+          away_mode: false
+
+  - alias: Turn on hall light if sundown on weekday morning
+    trigger:
+      platform: time
+      at: '07:00:00'
+    condition:
+      - condition: state
+        entity_id: group.people
+        state: 'home'
+      - condition: sun
+        before: sunrise
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+    action:
+      - service: light.turn_on
+        entity_id: light.downstairs_hall_lamp
+      - service: switch.turn_on
+        entity_id: switch.christmas_tree
+
+  - alias: Turn on hall light if sundown on weekend morning
+    trigger:
+      platform: time
+      at: '08:00:00'
+    condition:
+      - condition: state
+        entity_id: group.people
+        state: 'home'
+      - condition: sun
+        before: sunrise
+      - condition: time
+        weekday:
+          - sat
+          - sun
+    action: 
+      - service: light.turn_on
+        entity_id: light.downstairs_hall_lamp
+      - service: switch.turn_on
+        entity_id: switch.christmas_tree
+
+  - alias: Turn on livingroom lights when sunset if TV on
+    trigger:
+      platform: state
+      entity_id: binary_sensor.bright_outside
+      from: 'on'
+      to: 'off'
+    condition:
+      - condition: state
+        entity_id: group.livingroom_tv_ips
+        state: 'home'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.wine_rack_lamp
+          brightness_pct: 50
+      - service: light.turn_on
+        data:
+          entity_id: light.sofa_light
+          brightness_pct: 50
+
+  - alias: Turn on livingroom lights when TV turns on if after sunset
+    trigger:
+      platform: state
+      entity_id: group.livingroom_tv_ips
+      to: 'home'
+    condition:
+      - condition: state
+        entity_id: binary_sensor.bright_outside
+        state: 'off'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.wine_rack_lamp
+          brightness_pct: 50
+      - service: light.turn_on
+        data:
+          entity_id: light.sofa_light
+          brightness_pct: 50
+
+  - alias: Flash lights if someone is at the door
+    trigger:
+      platform: state
+      entity_id: light.porch_light
+      from: 'off'
+      to: 'on'
+    condition:
+      - condition: state
+        entity_id: group.people
+        state: 'home'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: group.all_lights
+          flash: 'short'
+
+  - alias: Wake up the bedroom
+    trigger:
+      platform: time
+      at: '07:30:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.people
+          state: 'home'
+        - condition: time
+          weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+    action:
+      - service: light.turn_on
+        entity_id: light.bedroom
+        data:
+          entity_id: light.bedroom
+          transition: 300
+          brightness_pct: 100
+
+  - alias: 'Alert when dryer is done'
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: binary_sensor.dryer
+      from: "on"
+      to: "off"
+    action:
+      - service: notify.kitchen_tablet
+        data:
+          message: 'The Dryer has finished its cycle.'

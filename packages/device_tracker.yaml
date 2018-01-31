@@ -1,0 +1,19 @@
+###############################################################################
+#
+# Device Tracking 
+#
+###############################################################################
+
+
+device_tracker:
+  - platform: owntracks
+    max_gps_accuracy: 200
+  - platform: nmap_tracker
+    hosts:
+      - 192.168.0.2-254
+    exclude: 192.168.0.28
+  - platform: unifi_direct
+    username: Admin
+    password: !secret unify_password
+    host: 192.168.0.23
+    verify_ssl: false

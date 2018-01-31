@@ -1,0 +1,11 @@
+group:
+  livingroom_tv_ips:
+    name: LivingRoom TV
+    entities:
+      - device_tracker.livingroom_tv
+      - device_tracker.livingroom_tv_wifi
+  tv_stats:
+    name: Television stats
+    entities:
+      - sensor.tv_on_today
+      - sensor.tv_on_this_week

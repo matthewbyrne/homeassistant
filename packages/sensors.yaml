@@ -1,0 +1,173 @@
+###############################################################################
+#
+#
+#
+###############################################################################
+#homeassistant:
+#  customize:
+
+
+# hide Multi Sensor Xtra Stuff
+#
+# hidden in customize_glob
+
+hue:
+  bridges:
+    - host: 192.168.0.100
+
+###############################################################################
+# Sensors
+###############################################################################
+sensor:
+  - platform: yr
+  - platform: google_travel_time
+    api_key: !secret google_api_key
+    origin: device_tracker.matts_phone_matts_phone
+    destination: zone.home
+    name: 'Time to Home'
+  - platform: google_travel_time
+    api_key: !secret google_api_key
+    origin: device_tracker.matts_phone_matts_phone
+    destination: Avenue 4000, Cork Airport Business Park, Cork
+    name: 'Time to Work'
+  - platform: template
+    sensors:
+      kettle_total_kw:
+        value_template: '{{ states.switch.kettle.attributes["total_consumption"] | replace(" kW", "") | float }}'
+        unit_of_measurement: 'kW'
+        friendly_name: 'Kettle Total Power Usage'
+      kettle_current_w:
+        value_template: '{{ states.switch.kettle.attributes["current_consumption"] | replace(" W", "") | float }}'
+        unit_of_measurement: 'W'
+        friendly_name: 'Kettle Current Power Usage'
+      tree_total_kw:
+        value_template: '{{ states.switch.christmas_tree.attributes["total_consumption"] | replace(" kW", "") | float }}'
+        unit_of_measurement: 'kW'
+        friendly_name: 'Christmas Tree Total Power Usage'
+      tree_current_w:
+        value_template: '{{ states.switch.christmas_tree.attributes["current_consumption"] | replace(" W", "") | float }}'
+        unit_of_measurement: 'W'
+        friendly_name: 'Christmas Tree Current Power Usage'
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/11
+    value_template: '{{ value_json.state.lightlevel }}'
+    unit_of_measurement: Lux
+    name: Gate Lux
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/19
+    value_template: '{{ value_json.state.lightlevel }}'
+    unit_of_measurement: Lux
+    name: Attic Hall Lux
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/25
+    value_template: '{{ value_json.state.lightlevel }}'
+    unit_of_measurement: Lux
+    name: Shed Lux
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/27
+    value_template: '{{ value_json.state.status }}'
+    name: 'Gate Motion'
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/28
+    value_template: '{{ value_json.state.status }}'
+    name: 'Shed Motion'
+  - platform: history_stats
+    name: TV On today
+    entity_id: group.livingroom_tv_ips
+    state: 'home'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: TV On this week
+    entity_id: group.livingroom_tv_ips
+    state: 'home'
+    type: time
+    start: '{{ as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) - now().weekday() * 86400 }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Heating ON today
+    entity_id: sensor.downstairs_thermostat_hvac_state
+    state: 'heating'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Heating ON yesterday
+    entity_id: sensor.downstairs_thermostat_hvac_state
+    state: 'heating'
+    type: time
+    end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    duration: 
+      hours: 24
+  - platform: history_stats
+    name: Heating ON this week
+    entity_id: sensor.downstairs_thermostat_hvac_state
+    state: 'heating'
+    type: time
+    start: '{{ as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) - now().weekday() * 86400 }}'
+    end: '{{ now() }}' 
+  - platform: history_stats
+    name: Heating ON last week
+    entity_id: sensor.downstairs_thermostat_hvac_state
+    state: 'heating'
+    type: time
+    end: '{{ as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) - now().weekday() * 86400 }}'
+    duration:
+      days: 7
+  - platform: history_stats
+    name: Heating ON since forever
+    entity_id: sensor.downstairs_thermostat_hvac_state
+    state: 'heating'
+    type: time
+    start: '{{ 0 }}'
+    end: '{{ now() }}'
+
+binary_sensor:
+  - platform: template
+    sensors:
+      christmas_tree:
+        value_template: >-
+          {%- if states.switch.christmas_tree.attributes["Current consumption"] | replace(" W", "") | float %}
+              {{ states.switch.christmas_tree.attributes["Current consumption"] | replace(" W", "") | float  > 1.0}}
+          {%  else %}
+              0
+          {%- endif %}
+        friendly_name: 'Christmas Tree'
+  - platform: template
+    sensors:
+      bright_outside:
+        value_template: "{{ states('sensor.gate_lux')|float > 9000 }}"
+        device_class: light
+        friendly_name: "Bright Outside?"
+      cold_in_house:
+        value_template: "{{ states('sensor.downstairs_thermostat_target')|float > states('sensor.downstairs_thermostat_temperature')|float }}"
+        device_class: heat
+        friendly_name: "Cold in house" 
+
+################################################
+## Switches
+################################################
+
+switch:
+  - platform: tplink
+    host: 192.168.0.12
+  - platform: tplink
+    host: 192.168.0.16
+  - platform: tplink
+    host: 192.168.0.18
+
+################################################
+## Cameras
+################################################
+camera:
+  - platform: generic
+    name: Kitchen Camera
+    still_image_url: http://192.168.0.25/tmpfs/auto.jpg
+    username: admin
+    password: !secret camera_password
+#  - platform: ffmpeg
+#    input: !secret front_camera_rtsp
+#    name: Driveway Camera
+#    extra_arguements: -q:v 2
+

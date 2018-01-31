@@ -1,0 +1,14 @@
+###############################################################################
+#
+# MQTT Integration
+#
+###############################################################################
+
+mqtt:
+  broker: m20.cloudmqtt.com
+  port: 19287
+  client_id: HA_MQTT
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  keepalive: 60
+

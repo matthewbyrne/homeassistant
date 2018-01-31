@@ -1,0 +1,13 @@
+group:
+  people:
+    name: People
+    entities:
+      - device_tracker.andrew_p7
+      - device_tracker.matts_phone_matts_phone
+      - device_tracker.matts_ZTE_phone
+      - device_tracker.noreens_network_phone
+      - device_tracker.noreen_noreens
+      - device_tracker.carmels_ipad
+      - device_tracker.dads_oneplus_2
+      - device_tracker.carmels_iphone7
+      - device_tracker.carolines_iphone

@@ -1,0 +1,11 @@
+group:
+  room_lights:
+    name: Room Lights
+    entities:
+      - light.bedroom
+      - light.kitchen
+      - light.garage
+      - light.hall
+      - light.living_room
+      - light.office
+ 

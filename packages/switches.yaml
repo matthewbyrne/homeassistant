@@ -1,0 +1,7 @@
+group:
+  switches:
+    name: Switches
+    entities:
+      - switch.attic_lamp
+      - switch.kettle
+      - switch.christmas_tree

@@ -1,0 +1,111 @@
+###############################################################################
+# Groups
+###############################################################################
+
+group:
+  # custom_view:
+  #   view: yes
+  #   icon: mdi:home
+  #   entities:
+  #     - group.hall
+  #     - group.bedroom
+  #     - group.livingroom
+  #     - group.shed
+  #     - group.all_automations
+  #     - sun.sun
+  default_view:
+    view: yes
+    icon: mdi:home
+    entities:
+      - group.room_lights
+#      - camera.driveway_camera
+      - camera.kitchen_camera
+      - climate.downstairs
+      - group.switches
+      - group.people
+      - group.automation
+      - device_tracker.amazon_fire
+      - sensor.time_to_home
+      - sensor.time_to_work
+      - sensor.yr_symbol
+      - sun.sun
+      - group.heating_stats
+  hall:
+    name: Hall
+    view: yes
+    entities:
+      - light.downstairs_hall_lamp
+      - light.landing_light
+      - light.porch_light
+      - light.attic_stairs_light
+      - sensor.gate_lux
+      - sensor.gate_motion
+#  bedroom:
+#    name: Bedroom
+#    view: yes
+#    entities:
+#      - light.indian_lamp
+  kitchen:
+    name: Kitchen
+    view: yes
+    entities:
+      - light.indian_lamp
+      - media_player.kitchen
+      - switch.kettle
+      - sensor.kettle_current_w
+      - sensor.kettle_total_kw
+  livingroom:
+    name: Livingroom
+    view: yes
+    entities:
+      - light.wine_rack_lamp
+      - light.sofa_light
+      - climate.downstairs
+      - binary_sensor.downstairs_thermostat_is_using_emergency_heat
+      - binary_sensor.downstairs_thermostat_has_leaf
+      - binary_sensor.downstairs_thermostat_online
+      - sensor.downstairs_thermostat_humidity
+      - sensor.downstairs_thermostat_hvac_state
+      - sensor.downstairs_thermostat_operation_mode
+      - sensor.downstairs_thermostat_target
+      - sensor.downstairs_thermostat_temperature
+      - device_tracker.livingroom_tv
+      - device_tracker.livingroom_tv_wifi
+      - media_player.living_room
+      - media_player.living_room_home
+      - switch.christmas_tree
+      - sensor.tree_current_w
+      - sensor.tree_total_kw
+      - group.tv_stats
+      - binary_sensor.heating_on
+      - group.heating_stats
+  attic:
+    name: Attic
+    view: yes
+    entities:
+      - switch.attic_lamp
+      - media_player.office
+      - light.attic_stairs_light
+      - light.office_light
+      - sensor.attic_hall_lux
+      - sensor.attic_motion
+  shed:
+    name: Shed
+    view: yes
+    entities:
+#      - switch.dryer
+#      - sensor.dryer_current_w
+#      - sensor.dryer_total_kw
+      - light.shed
+      - sensor.shed_lux
+      - sensor.shed_motion
+  status:
+    name: Status
+    view: yes
+    icon: mdi:console
+    entities:
+      - group.server_status
+      - group.speedtest
+      - sensor.ha_uptime
+      #- sensor.installed_version
+      - group.system_stats

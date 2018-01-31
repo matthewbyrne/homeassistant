@@ -1,0 +1,87 @@
+###############################################################################
+#
+# Server Status
+#
+###############################################################################
+# Dependencies / Glances - https://nicolargo.github.io/glances/
+###############################################################################
+homeassistant:
+  customize:
+
+    sensor.external_ip:
+      friendly_name: External IP
+      icon: mdi:earth
+    sensor.ha_uptime:
+      friendly_name: Home Assistant uptime
+      icon: mdi:timer
+    sensor.installed_version:
+      friendly_name: Home Assistant Version
+    sensor.current_version:
+      hidden: true
+    sensor.system_stats:
+      friendly_name: System Stats
+      icon: mdi:chart-line
+
+### STATE CARD
+
+group:
+  server_status:
+    name: Server Status
+    control: hidden
+    entities:
+      - sensor.external_ip
+      - sensor.ha_uptime
+      #- sensor.installed_version
+      - sensor.disk_use_
+      - sensor.ram_free
+      - sensor.since_last_boot
+      - sensor.last_boot
+      - sensor.average_load_1m
+
+sensor:
+
+### external ip
+
+  - platform: rest
+    resource: http://ip.jsontest.com
+    name: external_ip
+    value_template: '{{ value_json.ip }}'
+    scan_interval: 10800
+
+### uptime
+
+  - platform: command_line
+    name: 'HA Uptime'
+    command: echo "$(($(date +%s) - $(date -d "$(head -n1 /home/homeassistant/.homeassistant/home-assistant.log | cut -d' ' -f-2)" +%s)))"
+    scan_interval: 720
+    value_template: >-
+      {% set uptime = value | int %}
+      {% set seconds = uptime % 60 %}
+      {% set minutes = ((uptime % 3600) / 60) | int %}
+      {% set hours = ((uptime % 86400) / 3600) | int %}
+      {% set days = (uptime / 86400) | int %}
+      {%- if days > 0 -%}
+        {%- if days == 1 -%}
+          1 day
+        {%- else -%}
+          {{ days }} days
+        {%- endif -%}
+        {{ ', ' }}
+      {%- endif -%}
+      {{ '%02d' % hours }}:{{ '%02d' % minutes }}
+
+### versions
+  #
+  # - platform: command_line
+  #   name: Installed Version
+  #   command: /srv/homeassistant/bin/hass --version
+
+### System Stats
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_free
+      - type: last_boot
+      - type: since_last_boot
+      - type: load_1m

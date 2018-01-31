@@ -1,0 +1,8 @@
+group:
+  heating_stats:
+    name: Heating Stats
+    entities:
+      - sensor.heating_on_today
+      - sensor.heating_on_yesterday
+      - sensor.heating_on_this_week
+      - sensor.heating_on_last_week

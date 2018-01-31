@@ -1,0 +1,24 @@
+###############################################################################
+#
+# Speedtest
+#
+###############################################################################
+group:    
+  speedtest:
+     name: Speedtest
+     view: no
+     entities:
+       - sensor.speedtest_download
+       - sensor.speedtest_upload
+       - sensor.speedtest_ping
+       
+### sensor
+sensor:
+  - platform: speedtest
+    minute:
+    - 0
+    - 30
+    monitored_conditions:
+    - ping
+    - download
+    - upload
