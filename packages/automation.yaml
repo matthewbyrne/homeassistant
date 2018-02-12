@@ -114,6 +114,16 @@ automation:
       - service: switch.turn_on
         entity_id: switch.christmas_tree
 
+  - alias: Turn off hall light if bright outside
+    trigger:
+      platform: state
+      entity_id: binary_sensor.bright_outside
+      from: 'off'
+      to: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: group.room_lights
+
   - alias: Turn on livingroom lights when sunset if TV on
     trigger:
       platform: state
@@ -132,7 +142,7 @@ automation:
       - service: light.turn_on
         data:
           entity_id: light.sofa_light
-          brightness_pct: 50
+          brightness_pct: 35
 
   - alias: Turn on livingroom lights when TV turns on if after sunset
     trigger:
@@ -151,7 +161,7 @@ automation:
       - service: light.turn_on
         data:
           entity_id: light.sofa_light
-          brightness_pct: 50
+          brightness_pct: 35
 
   - alias: Flash lights if someone is at the door
     trigger:

@@ -13,3 +13,4 @@ group:
       - automation.wake_up_the_bedroom
       - automation.turn_on_hall_light_if_sundown_on_weekday_morning
       - automation.turn_on_hall_light_if_sundown_on_weekend_morning
+      - automation.turn_off_hall_light_if_bright_outside

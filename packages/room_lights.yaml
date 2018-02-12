@@ -2,10 +2,20 @@ group:
   room_lights:
     name: Room Lights
     entities:
-      - light.bedroom
+#      - light.bedroom
       - light.kitchen
       - light.garage
       - light.hall
       - light.living_room
       - light.office
  
+homeassistant:
+  customize:
+    light.garage:
+      icon: mdi:garage-open
+    light.living_room:
+      icon: mdi:sofa
+    light.office:
+      icon: mdi:monitor
+    light.kitchen:
+      icon: mdi:pot

@@ -4,4 +4,13 @@ group:
     entities:
       - switch.attic_lamp
       - switch.kettle
-      - switch.christmas_tree
+      - switch.mirror_lights
+
+homeassistant:
+  customize:
+    switch.kettle:
+      icon: mdi:kettle
+    switch.attic_lamp:
+      icon: mdi:lamp
+    switch.mirror_lights:
+      icon: mdi:glassdoor

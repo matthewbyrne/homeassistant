@@ -11,15 +11,18 @@
 #
 # hidden in customize_glob
 
-hue:
-  bridges:
-    - host: 192.168.0.100
-
 ###############################################################################
 # Sensors
 ###############################################################################
 sensor:
   - platform: yr
+    name: Weather
+    monitored_conditions:
+      - temperature
+      - cloudiness
+      - precipitation
+      - windSpeed
+      - pressure
   - platform: google_travel_time
     api_key: !secret google_api_key
     origin: device_tracker.matts_phone_matts_phone
@@ -40,14 +43,14 @@ sensor:
         value_template: '{{ states.switch.kettle.attributes["current_consumption"] | replace(" W", "") | float }}'
         unit_of_measurement: 'W'
         friendly_name: 'Kettle Current Power Usage'
-      tree_total_kw:
-        value_template: '{{ states.switch.christmas_tree.attributes["total_consumption"] | replace(" kW", "") | float }}'
+      mirror_lights_total_kw:
+        value_template: '{{ states.switch.mirror_lights.attributes["total_consumption"] | replace(" kW", "") | float }}'
         unit_of_measurement: 'kW'
-        friendly_name: 'Christmas Tree Total Power Usage'
-      tree_current_w:
-        value_template: '{{ states.switch.christmas_tree.attributes["current_consumption"] | replace(" W", "") | float }}'
+        friendly_name: 'Mirror Lights Total Power Usage'
+      mirror_lights_current_w:
+        value_template: '{{ states.switch.mirror_lights.attributes["current_consumption"] | replace(" W", "") | float }}'
         unit_of_measurement: 'W'
-        friendly_name: 'Christmas Tree Current Power Usage'
+        friendly_name: 'Mirror Lights Current Power Usage'
   - platform: rest
     resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/11
     value_template: '{{ value_json.state.lightlevel }}'
@@ -126,10 +129,10 @@ sensor:
 binary_sensor:
   - platform: template
     sensors:
-      christmas_tree:
+      mirror_lights:
         value_template: >-
-          {%- if states.switch.christmas_tree.attributes["Current consumption"] | replace(" W", "") | float %}
-              {{ states.switch.christmas_tree.attributes["Current consumption"] | replace(" W", "") | float  > 1.0}}
+          {%- if states.switch.mirror_lights.attributes["Current consumption"] | replace(" W", "") | float %}
+              {{ states.switch.mirror_lights.attributes["Current consumption"] | replace(" W", "") | float  > 1.0}}
           {%  else %}
               0
           {%- endif %}

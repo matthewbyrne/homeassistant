@@ -30,6 +30,7 @@ group:
       - sensor.yr_symbol
       - sun.sun
       - group.heating_stats
+      - group.weather
   hall:
     name: Hall
     view: yes
@@ -40,10 +41,14 @@ group:
       - light.attic_stairs_light
       - sensor.gate_lux
       - sensor.gate_motion
-#  bedroom:
-#    name: Bedroom
-#    view: yes
-#    entities:
+  bedroom:
+    name: Bedroom
+    view: yes
+    entities:
+      - sensor.mirror_lights_current_w
+      - sensor.mirror_lights_total_kw
+      - switch.mirror_lights
+      - media_player.bedroom_tv
 #      - light.indian_lamp
   kitchen:
     name: Kitchen
@@ -73,9 +78,7 @@ group:
       - device_tracker.livingroom_tv_wifi
       - media_player.living_room
       - media_player.living_room_home
-      - switch.christmas_tree
-      - sensor.tree_current_w
-      - sensor.tree_total_kw
+      - media_player.plex
       - group.tv_stats
       - binary_sensor.heating_on
       - group.heating_stats
@@ -89,6 +92,7 @@ group:
       - light.office_light
       - sensor.attic_hall_lux
       - sensor.attic_motion
+      - media_player.plex_web_firefox
   shed:
     name: Shed
     view: yes
