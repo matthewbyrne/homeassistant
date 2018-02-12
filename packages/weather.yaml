@@ -1,0 +1,10 @@
+group:
+  weather:
+    name: Weather
+    entities:
+      - sensor.weather_cloudiness
+      - sensor.weather_precipitation
+      - sensor.weather_pressure
+      - sensor.weather_temperature
+      - sensor.weather_wind_speed
+      - sun.sun

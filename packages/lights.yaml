@@ -1,0 +1,17 @@
+hue:
+  bridges:
+    - host: 192.168.0.100
+
+homeassistant:
+  customize:
+    light.shed:
+      icon: mdi:garage-open
+    light.indian_lamp:
+      icon: mdi:lava-lamp
+    light.front_door:
+      icon: mdi:door
+    light.sofa_light:
+      icon: mdi:sofa
+    light.wine_rack_lamp:
+      icon: mdi:glass-tulip
+
