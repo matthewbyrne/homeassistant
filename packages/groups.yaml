@@ -49,6 +49,7 @@ group:
       - sensor.mirror_lights_total_kw
       - switch.mirror_lights
       - media_player.bedroom_tv
+      - media_player.bedroom_speaker
 #      - light.indian_lamp
   kitchen:
     name: Kitchen
@@ -76,8 +77,9 @@ group:
       - sensor.downstairs_thermostat_temperature
       - device_tracker.livingroom_tv
       - device_tracker.livingroom_tv_wifi
-      - media_player.living_room
+      - media_player.living_room_tv
       - media_player.living_room_home
+      - media_player.ue43j5600_ue43j5500
       - media_player.plex
       - group.tv_stats
       - binary_sensor.heating_on

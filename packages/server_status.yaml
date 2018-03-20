@@ -32,11 +32,12 @@ group:
       - sensor.external_ip
       - sensor.ha_uptime
       #- sensor.installed_version
-      - sensor.disk_use_
-      - sensor.ram_free
+      - sensor.disk_used_
+      - sensor.ram_available
       - sensor.since_last_boot
       - sensor.last_boot
       - sensor.average_load_1m
+      - sensor.cert_expiry
 
 sensor:
 
@@ -85,3 +86,9 @@ sensor:
       - type: last_boot
       - type: since_last_boot
       - type: load_1m
+  
+### Certificate Expiry
+  - platform: cert_expiry
+    #host: !secret dns_host
+    host: !secret host
+    name: Cert Expiry

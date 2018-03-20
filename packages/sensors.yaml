@@ -126,27 +126,26 @@ sensor:
     start: '{{ 0 }}'
     end: '{{ now() }}'
 
+# Sensor to monitor if a devices power usage drops below its running state.
+# Uses: Alert when drier has finished. Monitor TV usage (when above standby consumption)
 binary_sensor:
-  - platform: template
-    sensors:
-      mirror_lights:
-        value_template: >-
-          {%- if states.switch.mirror_lights.attributes["Current consumption"] | replace(" W", "") | float %}
-              {{ states.switch.mirror_lights.attributes["Current consumption"] | replace(" W", "") | float  > 1.0}}
-          {%  else %}
-              0
-          {%- endif %}
-        friendly_name: 'Christmas Tree'
+#  - platform: template
+#    sensors:
+#      drier:
+#        value_template: >-
+#          {%- if states.switch.drier.attributes["Current consumption"] | replace(" W", "") | float %}
+#              {{ states.switch.drier.attributes["Current consumption"] | replace(" W", "") | float  > 1.0}}
+#          {%  else %}
+#              0
+#          {%- endif %}
+#        friendly_name: 'Is drier running?'
+# Uses: Trigger default lighting when it's actually dark, rathen than sunset.
   - platform: template
     sensors:
       bright_outside:
         value_template: "{{ states('sensor.gate_lux')|float > 9000 }}"
         device_class: light
         friendly_name: "Bright Outside?"
-      cold_in_house:
-        value_template: "{{ states('sensor.downstairs_thermostat_target')|float > states('sensor.downstairs_thermostat_temperature')|float }}"
-        device_class: heat
-        friendly_name: "Cold in house" 
 
 ################################################
 ## Switches
