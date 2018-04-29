@@ -74,6 +74,9 @@ sensor:
     resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/28
     value_template: '{{ value_json.state.status }}'
     name: 'Shed Motion'
+  ################################################
+  ## History Stats
+  ################################################  
   - platform: history_stats
     name: TV On today
     entity_id: group.livingroom_tv_ips
@@ -119,13 +122,31 @@ sensor:
     duration:
       days: 7
   - platform: history_stats
-    name: Heating ON since forever
+    name: Heating ON accumulated
     entity_id: sensor.downstairs_thermostat_hvac_state
     state: 'heating'
     type: time
+#    start: '{{ now().replace(year=2016) }}'
     start: '{{ 0 }}'
     end: '{{ now() }}'
+  ################################################
+  ## MQTT
+  ################################################
+  - platform: mqtt
+    state_topic: 'wemosd1mini/baby_room/SENSOR'
+    name: 'Moons Room - Temperature'
+    unit_of_measurement: 'C'
+    value_template: '{{ value_json.BME280.Temperature }}'
+  - platform: mqtt
+    state_topic: 'wemosd1mini/baby_room/SENSOR'
+    name: 'Moons Room - Humidity'
+    unit_of_measurement: '%'
+    value_template: '{{ value_json.BME280.Humidity }}'
 
+
+################################################
+## Binary Sensors
+################################################
 # Sensor to monitor if a devices power usage drops below its running state.
 # Uses: Alert when drier has finished. Monitor TV usage (when above standby consumption)
 binary_sensor:
@@ -143,9 +164,10 @@ binary_sensor:
   - platform: template
     sensors:
       bright_outside:
-        value_template: "{{ states('sensor.gate_lux')|float > 9000 }}"
+        value_template: "{{ states('sensor.gate_lux')|float > 11000 }}"
         device_class: light
         friendly_name: "Bright Outside?"
+
 
 ################################################
 ## Switches
@@ -153,11 +175,20 @@ binary_sensor:
 
 switch:
   - platform: tplink
-    host: 192.168.0.12
+    host: 192.168.0.10
   - platform: tplink
-    host: 192.168.0.16
+    host: 192.168.0.14
   - platform: tplink
     host: 192.168.0.18
+  - platform: mqtt
+    name: "Back lights"
+    command_topic: "sonoff/outside_lights_back/cmnd/POWER"
+    state_topic: "sonoff/outside_lights_back/RESULT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+    value_template: "{{ value_json.POWER }}"
 
 ################################################
 ## Cameras

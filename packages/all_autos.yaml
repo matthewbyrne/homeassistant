@@ -5,7 +5,7 @@ group:
       - automation.alert_when_dryer_is_done
       - automation.flash_lights_if_someone_is_at_the_door
       - automation.set_heating_to_home_when_people_are_home
-      - automation.turn_off_lights__heating_20_mins_after_everyone_leaves
+      - automation.turn_off_lights__heating_10_mins_after_everyone_leaves
       - automation.turn_on_lights_when_home_if_after_sunset
       - automation.turn_on_lights_when_sunset_if_someones_home
       - automation.turn_on_livingroom_lights_when_sunset_if_tv_on
@@ -14,3 +14,4 @@ group:
       - automation.turn_on_hall_light_if_sundown_on_weekday_morning
       - automation.turn_on_hall_light_if_sundown_on_weekend_morning
       - automation.turn_off_hall_light_if_bright_outside
+      - automation.turn_off_attic_light_at_night_time

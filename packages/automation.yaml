@@ -2,20 +2,19 @@
 ## Automation
 ################################################
 automation:
-  - alias: Turn off lights & heating 20 mins after everyone leaves
+  - alias: Turn off lights & heating 10 mins after everyone leaves
     trigger:
       platform: state
       entity_id: group.people
       to: 'not_home'
       for:
-        minutes: 20
+        minutes: 10
     action:
       - service: light.turn_off
         entity_id: group.all_lights
       - service: switch.turn_off
         entity_id: 
           - switch.attic_light
-          - switch.christmas_tree
       - service: climate.set_away_mode
         data:
           entity_id: climate.downstairs
@@ -44,8 +43,6 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
-      - service: switch.turn_on
-        entity_id: switch.christmas_tree
       - service: climate.set_away_mode
         data: 
           entity_id: climate.downstairs
@@ -64,8 +61,6 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
-      - service: switch.turn_on
-        entity_id: switch.christmas_tree
       - service: climate.set_away_mode
         data: 
           entity_id: climate.downstairs
@@ -91,8 +86,6 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
-      - service: switch.turn_on
-        entity_id: switch.christmas_tree
 
   - alias: Turn on hall light if sundown on weekend morning
     trigger:
@@ -111,8 +104,6 @@ automation:
     action: 
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
-      - service: switch.turn_on
-        entity_id: switch.christmas_tree
 
   - alias: Turn off hall light if bright outside
     trigger:
@@ -215,3 +206,14 @@ automation:
       - service: notify.kitchen_tablet
         data:
           message: 'The Dryer has finished its cycle.'
+
+  - alias: Turn off attic Light at night time
+    trigger:
+      platform: time
+      at: '00:30:00' 
+    action:
+      - service: switch.turn_off
+        entity_id:
+          - switch.attic_lamp
+
+

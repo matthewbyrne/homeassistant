@@ -32,11 +32,11 @@ group:
       - sensor.external_ip
       - sensor.ha_uptime
       #- sensor.installed_version
-      - sensor.disk_used_
-      - sensor.ram_available
+      - sensor.disk_use_percent_
+      - sensor.memory_free
       - sensor.since_last_boot
       - sensor.last_boot
-      - sensor.average_load_1m
+      - sensor.load_1m
       - sensor.cert_expiry
 
 sensor:

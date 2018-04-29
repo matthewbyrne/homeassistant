@@ -50,6 +50,8 @@ group:
       - switch.mirror_lights
       - media_player.bedroom_tv
       - media_player.bedroom_speaker
+      - sensor.moons_room__temperature
+      - sensor.moons_room__humidity
 #      - light.indian_lamp
   kitchen:
     name: Kitchen

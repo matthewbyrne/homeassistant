@@ -5,6 +5,7 @@ group:
       - switch.attic_lamp
       - switch.kettle
       - switch.mirror_lights
+      - switch.back_lights
 
 homeassistant:
   customize:

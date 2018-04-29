@@ -77,3 +77,4 @@ notify:
 influxdb:
   username: home-assistant
   password: !secret influxdb_password
+

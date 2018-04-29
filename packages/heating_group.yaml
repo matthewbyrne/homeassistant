@@ -6,3 +6,4 @@ group:
       - sensor.heating_on_yesterday
       - sensor.heating_on_this_week
       - sensor.heating_on_last_week
+      - sensor.heating_on_accumulated
