@@ -15,3 +15,5 @@ homeassistant:
       icon: mdi:lamp
     switch.mirror_lights:
       icon: mdi:glassdoor
+    switch.back_lights:
+      icon: mdi:lightbulb-on-outline
