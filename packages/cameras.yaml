@@ -1,0 +1,6 @@
+group:
+  cameras:
+    name: Cameras
+    entities:
+      - camera.driveway_camera
+      - camera.kitchen_camera

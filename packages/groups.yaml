@@ -18,19 +18,17 @@ group:
     icon: mdi:home
     entities:
       - group.room_lights
-#      - camera.driveway_camera
-      - camera.kitchen_camera
+      - group.cameras
       - climate.downstairs
       - group.switches
       - group.people
-      - group.automation
-      - device_tracker.amazon_fire
       - sensor.time_to_home
       - sensor.time_to_work
       - sensor.yr_symbol
       - sun.sun
       - group.heating_stats
       - group.weather
+      - group.room_temperatures
   hall:
     name: Hall
     view: yes
@@ -41,6 +39,7 @@ group:
       - light.attic_stairs_light
       - sensor.gate_lux
       - sensor.gate_motion
+      - camera.driveway_camera
   bedroom:
     name: Bedroom
     view: yes
@@ -62,6 +61,7 @@ group:
       - switch.kettle
       - sensor.kettle_current_w
       - sensor.kettle_total_kw
+      - camera.kitchen_camera
   livingroom:
     name: Livingroom
     view: yes
@@ -117,3 +117,4 @@ group:
       - sensor.ha_uptime
       #- sensor.installed_version
       - group.system_stats
+      - group.automation

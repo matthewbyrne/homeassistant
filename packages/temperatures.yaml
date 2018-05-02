@@ -1,0 +1,7 @@
+group:
+  room_temperatures:
+    name: Room Temperatures
+    entities:
+      - sensor.downstairs_thermostat_temperature
+      - sensor.kitchen__temperature
+      - sensor.moons_room__temperature
