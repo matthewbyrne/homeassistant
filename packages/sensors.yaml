@@ -142,6 +142,16 @@ sensor:
     name: 'Moons Room - Humidity'
     unit_of_measurement: '%'
     value_template: '{{ value_json.BME280.Humidity }}'
+  - platform: mqtt
+    state_topic: 'wemosd1mini/kitchen/SENSOR'
+    name: 'Kitchen - Temperature'
+    unit_of_measurement: 'C'
+    value_template: '{{ value_json.BME280.Temperature }}'
+  - platform: mqtt
+    state_topic: 'wemosd1mini/kitchen/SENSOR'
+    name: 'Kitchen - Humidity'
+    unit_of_measurement: '%'
+    value_template: '{{ value_json.BME280.Humidity }}'
 
 
 ################################################
@@ -199,8 +209,8 @@ camera:
     still_image_url: http://192.168.0.25/tmpfs/auto.jpg
     username: admin
     password: !secret camera_password
-#  - platform: ffmpeg
-#    input: !secret front_camera_rtsp
-#    name: Driveway Camera
+  - platform: ffmpeg
+    input: !secret front_camera_rtsp
+    name: Driveway Camera
 #    extra_arguements: -q:v 2
 
