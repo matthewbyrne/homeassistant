@@ -15,3 +15,4 @@ group:
       - automation.turn_on_hall_light_if_sundown_on_weekend_morning
       - automation.turn_off_hall_light_if_bright_outside
       - automation.turn_off_attic_light_at_night_time
+      - automation.turn_on_outside_lights_if_dark

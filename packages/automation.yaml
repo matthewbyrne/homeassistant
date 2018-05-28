@@ -215,5 +215,16 @@ automation:
       - service: switch.turn_off
         entity_id:
           - switch.attic_lamp
+          - switch.back_lights
 
-
+  - alias: Turn on outside lights if dark
+    trigger:
+      platform: time
+      at: '21:30:00'
+    condition:
+      - condition: state
+        entity_id: group.people
+        state: 'home'
+    action:
+      - service: switch.turn_on
+        entity_id: switch.back_lights

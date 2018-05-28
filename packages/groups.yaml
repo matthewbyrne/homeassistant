@@ -51,6 +51,16 @@ group:
       - media_player.bedroom_speaker
       - sensor.moons_room__temperature
       - sensor.moons_room__humidity
+      - climate.downstairs
+      - binary_sensor.downstairs_thermostat_is_using_emergency_heat
+      - binary_sensor.downstairs_thermostat_has_leaf
+      - binary_sensor.downstairs_thermostat_online
+      - sensor.downstairs_thermostat_humidity
+      - sensor.downstairs_thermostat_hvac_state
+      - sensor.downstairs_thermostat_operation_mode
+      - sensor.downstairs_thermostat_target
+      - sensor.downstairs_thermostat_temperature
+      - group.heating_stats
 #      - light.indian_lamp
   kitchen:
     name: Kitchen
@@ -68,15 +78,6 @@ group:
     entities:
       - light.wine_rack_lamp
       - light.sofa_light
-      - climate.downstairs
-      - binary_sensor.downstairs_thermostat_is_using_emergency_heat
-      - binary_sensor.downstairs_thermostat_has_leaf
-      - binary_sensor.downstairs_thermostat_online
-      - sensor.downstairs_thermostat_humidity
-      - sensor.downstairs_thermostat_hvac_state
-      - sensor.downstairs_thermostat_operation_mode
-      - sensor.downstairs_thermostat_target
-      - sensor.downstairs_thermostat_temperature
       - device_tracker.livingroom_tv
       - device_tracker.livingroom_tv_wifi
       - media_player.living_room_tv
@@ -84,8 +85,6 @@ group:
       - media_player.ue43j5600_ue43j5500
       - media_player.plex
       - group.tv_stats
-      - binary_sensor.heating_on
-      - group.heating_stats
   attic:
     name: Attic
     view: yes

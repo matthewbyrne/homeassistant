@@ -36,19 +36,19 @@ sensor:
   - platform: template
     sensors:
       kettle_total_kw:
-        value_template: '{{ states.switch.kettle.attributes["total_consumption"] | replace(" kW", "") | float }}'
+        value_template: '{{ states.switch.kettle.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
         unit_of_measurement: 'kW'
         friendly_name: 'Kettle Total Power Usage'
       kettle_current_w:
-        value_template: '{{ states.switch.kettle.attributes["current_consumption"] | replace(" W", "") | float }}'
+        value_template: '{{ states.switch.kettle.attributes["current_power_w"] | replace(" W", "") | float }}'
         unit_of_measurement: 'W'
         friendly_name: 'Kettle Current Power Usage'
       mirror_lights_total_kw:
-        value_template: '{{ states.switch.mirror_lights.attributes["total_consumption"] | replace(" kW", "") | float }}'
+        value_template: '{{ states.switch.mirror_lights.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
         unit_of_measurement: 'kW'
         friendly_name: 'Mirror Lights Total Power Usage'
       mirror_lights_current_w:
-        value_template: '{{ states.switch.mirror_lights.attributes["current_consumption"] | replace(" W", "") | float }}'
+        value_template: '{{ states.switch.mirror_lights.attributes["current_power_w"] | replace(" W", "") | float }}'
         unit_of_measurement: 'W'
         friendly_name: 'Mirror Lights Current Power Usage'
   - platform: rest
