@@ -72,6 +72,8 @@ group:
       - sensor.kettle_current_w
       - sensor.kettle_total_kw
       - camera.kitchen_camera
+      - sensor.kitchen__humidity
+      - sensor.kitchen__temperature
   livingroom:
     name: Livingroom
     view: yes
