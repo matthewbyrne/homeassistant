@@ -154,23 +154,8 @@ automation:
           entity_id: light.sofa_light
           brightness_pct: 35
 
-  - alias: Flash lights if someone is at the door
-    trigger:
-      platform: state
-      entity_id: light.porch_light
-      from: 'off'
-      to: 'on'
-    condition:
-      - condition: state
-        entity_id: group.people
-        state: 'home'
-    action:
-      - service: light.turn_on
-        data:
-          entity_id: group.all_lights
-          flash: 'short'
-
   - alias: Wake up the bedroom
+    initial_state: 'off'
     trigger:
       platform: time
       at: '07:30:00'
@@ -196,7 +181,7 @@ automation:
           brightness_pct: 100
 
   - alias: 'Alert when dryer is done'
-    initial_state: 'on'
+    initial_state: 'off'
     trigger:
       platform: state
       entity_id: binary_sensor.dryer
@@ -228,3 +213,16 @@ automation:
     action:
       - service: switch.turn_on
         entity_id: switch.back_lights
+
+  - alias: Turn off fan when cool enough
+    trigger:
+      platform: state
+      entity_id: sensor.downstairs_thermostat_temperature
+      to: '21.0'
+    condition:
+      - condition: state
+        entity_id: group.people
+        state: 'home'
+    action:
+      - service: switch.turn_off
+        entity_id: switch.bedroom_fan

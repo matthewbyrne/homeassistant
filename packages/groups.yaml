@@ -39,14 +39,14 @@ group:
       - light.attic_stairs_light
       - sensor.gate_lux
       - sensor.gate_motion
+      - sensor.outside_temperature
+      - sensor.attic_hall_temperature
       - camera.driveway_camera
   bedroom:
     name: Bedroom
     view: yes
     entities:
-      - sensor.mirror_lights_current_w
-      - sensor.mirror_lights_total_kw
-      - switch.mirror_lights
+      - switch.bedroom_fan
       - media_player.bedroom_tv
       - media_player.bedroom_speaker
       - sensor.moons_room__temperature
@@ -61,7 +61,7 @@ group:
       - sensor.downstairs_thermostat_target
       - sensor.downstairs_thermostat_temperature
       - group.heating_stats
-#      - light.indian_lamp
+      - light.bedroom
   kitchen:
     name: Kitchen
     view: yes
@@ -79,6 +79,9 @@ group:
     view: yes
     entities:
       - light.wine_rack_lamp
+      - switch.living_room_tv
+      - sensor.livingroom_tv_total_kw
+      - sensor.livingroom_tv_current_w
       - light.sofa_light
       - device_tracker.livingroom_tv
       - device_tracker.livingroom_tv_wifi
@@ -87,16 +90,20 @@ group:
       - media_player.ue43j5600_ue43j5500
       - media_player.plex
       - group.tv_stats
-  attic:
-    name: Attic
+      - sensor.livingroom__temperature
+      - sensor.livingroom__pressure
+  office:
+    name: Office
     view: yes
     entities:
       - switch.attic_lamp
       - media_player.office
       - light.attic_stairs_light
-      - light.office_light
       - sensor.attic_hall_lux
       - sensor.attic_motion
+      - sensor.attic_hall_temperature
+      - sensor.office__temperature
+      - sensor.office__pressure
       - media_player.plex_web_firefox
   shed:
     name: Shed
@@ -107,6 +114,7 @@ group:
 #      - sensor.dryer_total_kw
       - light.shed
       - sensor.shed_lux
+      - sensor.shed_temperature
       - sensor.shed_motion
   status:
     name: Status

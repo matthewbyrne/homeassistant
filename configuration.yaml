@@ -14,6 +14,8 @@ homeassistant:
   customize:
     sensor.gate_motion:
       entity_picture: /local/Gate.JPG
+    sensor.downstairs_thermostat_temperature:
+      friendly_name: Master Bedroom Temperature
 
 #  configuration:
 
@@ -24,11 +26,11 @@ homeassistant:
 frontend:
 
 # Enables configuration UI
-#config:
+config:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret http_password
+  # api_password: !secret http_password
   # Uncomment this if you are using SSL or running in Docker etc
   base_url: !secret dns_host
   ssl_certificate: !secret ssl_cert
@@ -51,6 +53,7 @@ logbook:
 
 # Enabled support for tracking state changes over time.
 recorder:
+  purge_keep_days: 2
 
 # Track the sun
 sun:

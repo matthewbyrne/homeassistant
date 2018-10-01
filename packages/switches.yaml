@@ -4,7 +4,7 @@ group:
     entities:
       - switch.attic_lamp
       - switch.kettle
-      - switch.mirror_lights
+#      - switch.bedroom_fan
       - switch.back_lights
 
 homeassistant:
@@ -13,7 +13,11 @@ homeassistant:
       icon: mdi:kettle
     switch.attic_lamp:
       icon: mdi:lamp
-    switch.mirror_lights:
-      icon: mdi:glassdoor
+#    switch.mirror_lights:
+#      icon: mdi:glassdoor
+#    switch.bedroom_fan:
+#      icon: mdi:fan
     switch.back_lights:
       icon: mdi:lightbulb-on-outline
+    switch.livingroom_tv:
+      icon: mdi:television

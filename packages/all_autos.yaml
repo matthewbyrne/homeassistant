@@ -3,7 +3,6 @@ group:
     name: Automation
     entities:
       - automation.alert_when_dryer_is_done
-      - automation.flash_lights_if_someone_is_at_the_door
       - automation.set_heating_to_home_when_people_are_home
       - automation.turn_off_lights__heating_10_mins_after_everyone_leaves
       - automation.turn_on_lights_when_home_if_after_sunset
@@ -16,3 +15,5 @@ group:
       - automation.turn_off_hall_light_if_bright_outside
       - automation.turn_off_attic_light_at_night_time
       - automation.turn_on_outside_lights_if_dark
+      - automation.turn_off_fan_when_cool_enough
+

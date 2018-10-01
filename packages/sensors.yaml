@@ -25,13 +25,15 @@ sensor:
       - pressure
   - platform: google_travel_time
     api_key: !secret google_api_key
-    origin: device_tracker.matts_phone_matts_phone
+    origin: device_tracker.mqtt_matts_phone
     destination: zone.home
+    scan_interval: 600
     name: 'Time to Home'
   - platform: google_travel_time
     api_key: !secret google_api_key
-    origin: device_tracker.matts_phone_matts_phone
+    origin: device_tracker.mqtt_matts_phone
     destination: Avenue 4000, Cork Airport Business Park, Cork
+    scan_interval: 600
     name: 'Time to Work'
   - platform: template
     sensors:
@@ -43,14 +45,14 @@ sensor:
         value_template: '{{ states.switch.kettle.attributes["current_power_w"] | replace(" W", "") | float }}'
         unit_of_measurement: 'W'
         friendly_name: 'Kettle Current Power Usage'
-      mirror_lights_total_kw:
-        value_template: '{{ states.switch.mirror_lights.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
+      livingroom_tv_total_kw:
+        value_template: '{{ states.switch.living_room_tv.attributes["total_energy_kwh"] | replace(" kW", "") | float }}'
         unit_of_measurement: 'kW'
-        friendly_name: 'Mirror Lights Total Power Usage'
-      mirror_lights_current_w:
-        value_template: '{{ states.switch.mirror_lights.attributes["current_power_w"] | replace(" W", "") | float }}'
+        friendly_name: 'TV Total Power Usage'
+      livingroom_tv_current_w:
+        value_template: '{{ states.switch.living_room_tv.attributes["current_power_w"] | replace(" W", "") | float }}'
         unit_of_measurement: 'W'
-        friendly_name: 'Mirror Lights Current Power Usage'
+        friendly_name: 'TV Current Power Usage'
   - platform: rest
     resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/11
     value_template: '{{ value_json.state.lightlevel }}'
@@ -74,6 +76,22 @@ sensor:
     resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/28
     value_template: '{{ value_json.state.status }}'
     name: 'Shed Motion'
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/9
+    value_template: '{{ value_json.state.temperature | float / 100 }}'
+    unit_of_measurement: °C
+    name: 'Outside Temperature'
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/17
+    value_template: '{{ value_json.state.temperature | float / 100 }}'
+    unit_of_measurement: °C
+    name: 'Attic Hall Temperature'
+  - platform: rest
+    resource: http://192.168.0.100/api/lDIhhTHDO3mBDzQKsxNuJfGyIhcA-o3eLVAbyVjK/sensors/23
+    value_template: '{{ value_json.state.temperature | float / 100 }}'
+    unit_of_measurement: °C
+    name: 'Shed Temperature'
+
   ################################################
   ## History Stats
   ################################################  
@@ -114,38 +132,44 @@ sensor:
     start: '{{ as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) - now().weekday() * 86400 }}'
     end: '{{ now() }}' 
   - platform: history_stats
-    name: Heating ON last week
+    name: Heating Total
     entity_id: sensor.downstairs_thermostat_hvac_state
     state: 'heating'
     type: time
-    end: '{{ as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) - now().weekday() * 86400 }}'
-    duration:
-      days: 7
-  - platform: history_stats
-    name: Heating ON accumulated
-    entity_id: sensor.downstairs_thermostat_hvac_state
-    state: 'heating'
-    type: time
-#    start: '{{ now().replace(year=2016) }}'
-    start: '{{ 0 }}'
+    start: '{{ now().replace(year=2017) }}'
+#    start: '{{ 0 }}'
     end: '{{ now() }}'
   ################################################
   ## MQTT
   ################################################
   - platform: mqtt
-    state_topic: 'wemosd1mini/baby_room/SENSOR'
+    state_topic: '/ESPEasy_BabyRoom/BME280/Temperature'
     name: 'Moons Room - Temperature'
-    unit_of_measurement: 'C'
-    value_template: '{{ value_json.BME280.Temperature }}'
+    unit_of_measurement: °C
   - platform: mqtt
-    state_topic: 'wemosd1mini/baby_room/SENSOR'
+    state_topic: '/ESPEasy_BabyRoom/BME280/Humidity'
     name: 'Moons Room - Humidity'
     unit_of_measurement: '%'
-    value_template: '{{ value_json.BME280.Humidity }}'
+  - platform: mqtt
+    state_topic: '/ESPEasy_Office/BMP280/Temperature'
+    name: 'Office - Temperature'
+    unit_of_measurement: °C
+  - platform: mqtt
+    state_topic: '/ESPEasy_Office/BMP280/Pressure'
+    name: 'Office - Pressure'
+    unit_of_measurement: '%'
+  - platform: mqtt
+    state_topic: '/ESPEasy_Livingroom/BMP280/Temperature'
+    name: 'Livingroom - Temperature'
+    unit_of_measurement: °C
+  - platform: mqtt
+    state_topic: '/ESPEasy_Livingroom/BMP280/Pressure'
+    name: 'Livingroom - Pressure'
+    unit_of_measurement: '%'
   - platform: mqtt
     state_topic: 'wemosd1mini/kitchen/SENSOR'
     name: 'Kitchen - Temperature'
-    unit_of_measurement: 'C'
+    unit_of_measurement: °C
     value_template: '{{ value_json.BME280.Temperature }}'
   - platform: mqtt
     state_topic: 'wemosd1mini/kitchen/SENSOR'
@@ -185,16 +209,15 @@ binary_sensor:
 
 switch:
   - platform: tplink
-    host: 192.168.0.10
+    host: 192.168.0.109
   - platform: tplink
-    host: 192.168.0.14
+    host: 192.168.0.124
   - platform: tplink
-    host: 192.168.0.18
+    host: 192.168.0.235
   - platform: mqtt
     name: "Back lights"
     command_topic: "sonoff/outside_lights_back/cmnd/POWER"
     state_topic: "sonoff/outside_lights_back/RESULT"
-    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
     retain: true
@@ -205,10 +228,13 @@ switch:
 ################################################
 camera:
   - platform: generic
-    name: Kitchen Camera
+    name: Kitchen Camera Image
     still_image_url: http://192.168.0.25/tmpfs/auto.jpg
     username: admin
     password: !secret camera_password
+  - platform: ffmpeg
+    input: rtsp://admin:Matches1!@192.168.0.25/11
+    name: Kitchen Camera
   - platform: ffmpeg
     input: !secret front_camera_rtsp
     name: Driveway Camera

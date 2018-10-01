@@ -12,8 +12,11 @@ device_tracker:
     hosts:
       - 192.168.0.2-254
     exclude: 192.168.0.28
+    interval_seconds: 30
   - platform: unifi_direct
     username: Admin
     password: !secret unify_password
     host: 192.168.0.23
     verify_ssl: false
+
+map:

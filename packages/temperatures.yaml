@@ -5,3 +5,8 @@ group:
       - sensor.downstairs_thermostat_temperature
       - sensor.kitchen__temperature
       - sensor.moons_room__temperature
+      - sensor.attic_hall_temperature
+      - sensor.outside_temperature
+      - sensor.shed_temperature
+      - sensor.office__temperature
+      - sensor.livingroom__temperature

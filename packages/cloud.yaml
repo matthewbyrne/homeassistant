@@ -1,0 +1,5 @@
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - switch.back_lights
