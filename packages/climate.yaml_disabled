@@ -1,0 +1,10 @@
+climate:
+  - platform: generic_thermostat
+    name: Livingroom
+    heater: switch.back_lights
+    target_sensor: sensor.livingroom__temperature
+  - platform: generic_thermostat
+    name: Babies room
+    heater: switch.back_lights
+    target_sensor: sensor.fias_room__temperature
+

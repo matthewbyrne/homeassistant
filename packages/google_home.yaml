@@ -1,0 +1,24 @@
+google_assistant:
+  project_id: !secret project_id
+  client_id: !secret client_id
+  access_token: !secret access_token
+  expose_by_default: false
+  exposed_domains:
+    - switch
+#    - climate
+  entity_config:
+    switch.back_lights:
+      name: Back Lights
+      aliases:
+        - Garden Lights
+      expose: true
+#    climate.livingroom:
+#      name: Livingroom
+#      expose: true
+#    climate.babies_room:
+#      name: Babies Room
+#      expose: true
+#      aliases:
+#        - Kids Room
+
+
