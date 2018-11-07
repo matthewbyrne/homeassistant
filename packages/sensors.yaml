@@ -144,11 +144,11 @@ sensor:
   ################################################
   - platform: mqtt
     state_topic: '/ESPEasy_BabyRoom/BME280/Temperature'
-    name: 'Moons Room - Temperature'
+    name: 'Fias Room - Temperature'
     unit_of_measurement: °C
   - platform: mqtt
     state_topic: '/ESPEasy_BabyRoom/BME280/Humidity'
-    name: 'Moons Room - Humidity'
+    name: 'Fias Room - Humidity'
     unit_of_measurement: '%'
   - platform: mqtt
     state_topic: '/ESPEasy_Office/BMP280/Temperature'
@@ -201,6 +201,10 @@ binary_sensor:
         value_template: "{{ states('sensor.gate_lux')|float > 11000 }}"
         device_class: light
         friendly_name: "Bright Outside?"
+      proper_dark_outside:
+        value_template: "{{ states('sensor.gate_lux')|float < 1000 }}"
+        device_class: light
+        friendly_name: "Proper dark outside"
 
 
 ################################################

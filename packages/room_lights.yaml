@@ -19,3 +19,7 @@ homeassistant:
       icon: mdi:monitor
     light.kitchen:
       icon: mdi:pot
+    light.bedroom:
+      icon: mdi:bed-empty
+    light.hall:
+      icon: mdi:stairs

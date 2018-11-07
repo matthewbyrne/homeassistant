@@ -49,8 +49,8 @@ group:
       - switch.bedroom_fan
       - media_player.bedroom_tv
       - media_player.bedroom_speaker
-      - sensor.moons_room__temperature
-      - sensor.moons_room__humidity
+      - sensor.fias_room__temperature
+      - sensor.fias_room__humidity
       - climate.downstairs
       - binary_sensor.downstairs_thermostat_is_using_emergency_heat
       - binary_sensor.downstairs_thermostat_has_leaf

@@ -19,5 +19,5 @@ homeassistant:
 #      icon: mdi:fan
     switch.back_lights:
       icon: mdi:lightbulb-on-outline
-    switch.livingroom_tv:
+    switch.living_room_tv:
       icon: mdi:television

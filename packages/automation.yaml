@@ -204,8 +204,10 @@ automation:
 
   - alias: Turn on outside lights if dark
     trigger:
-      platform: time
-      at: '21:30:00'
+      platform: state
+      entity_id: binary_sensor.proper_dark_outside
+      from: 'off'
+      to: 'on'
     condition:
       - condition: state
         entity_id: group.people
