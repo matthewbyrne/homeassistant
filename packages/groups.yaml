@@ -127,3 +127,22 @@ group:
       #- sensor.installed_version
       - group.system_stats
       - group.automation
+  test:
+    name: Test
+    view: yes
+    entities:
+      - climate.livingroom
+      - climate.fias_bedroom
+      - climate.master_bedroom
+      - switch.heating_on_off
+      - switch.living_room_cold
+      - switch.fias_bedroom_cold
+      - switch.master_bedroom_cold
+      - switch.20_minute_boost
+      - automation.bedroom_heat_off__7pm7am
+      - automation.bedroom_heat_on__7pm7am
+      - automation.living_room_heat_off__7am7pm
+      - automation.living_room_heat_on__7am7pm
+      - automation.turn_off_boost
+      - automation.turn_on_boost
+      - automation.20_minute_boost

@@ -14,4 +14,9 @@ homeassistant:
       icon: mdi:sofa
     light.wine_rack_lamp:
       icon: mdi:glass-tulip
-
+    light.downstairs_hall_lamp:
+      icon: mdi:lamp
+    light.landing_light:
+      icon: mdi:ceiling-light
+    light.attic_stairs_light:
+      icon: mdi:ceiling-light
