@@ -3,9 +3,10 @@
 #
 #
 ###############################################################################
-#homeassistant:
-#  customize:
-
+homeassistant:
+  customize:
+    sensor.gate_motion:
+      entity_picture: /local/Gate.JPG
 
 # hide Multi Sensor Xtra Stuff
 #
@@ -111,49 +112,61 @@ sensor:
     end: '{{ now() }}'
   - platform: history_stats
     name: Heating ON today
-    entity_id: sensor.downstairs_thermostat_hvac_state
-    state: 'heating'
+    entity_id: switch.heating_on_off
+    state: 'on'
     type: time
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
   - platform: history_stats
     name: Heating ON yesterday
-    entity_id: sensor.downstairs_thermostat_hvac_state
-    state: 'heating'
+    entity_id: switch.heating_on_off
+    state: 'on'
     type: time
     end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     duration: 
       hours: 24
   - platform: history_stats
     name: Heating ON this week
-    entity_id: sensor.downstairs_thermostat_hvac_state
-    state: 'heating'
+    entity_id: switch.heating_on_off
+    state: 'on'
     type: time
     start: '{{ as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) - now().weekday() * 86400 }}'
     end: '{{ now() }}' 
   - platform: history_stats
-    name: Heating Total
-    entity_id: sensor.downstairs_thermostat_hvac_state
-    state: 'heating'
+    name: Heating test
+    entity_id: switch.heating_on_off
+    state: 'on'
     type: time
-    start: '{{ now().replace(year=2017) }}'
-#    start: '{{ 0 }}'
     end: '{{ now() }}'
+    duration:
+      days: 30
+  - platform: statistics
+    entity_id: switch.heating_on_off
+
+
   ################################################
   ## MQTT
   ################################################
   - platform: mqtt
-    state_topic: '/ESPEasy_BabyRoom/BME280/Temperature'
-    name: 'Fias Room - Temperature'
-    unit_of_measurement: °C
+    state_topic: '/ESPEasy_MasterBedroom/BME280/Temperature'
+    name: 'Master Bedroom - Temperature'
+    unit_of_measurement: "°C"
   - platform: mqtt
-    state_topic: '/ESPEasy_BabyRoom/BME280/Humidity'
-    name: 'Fias Room - Humidity'
+    state_topic: '/ESPEasy_MasterBedroom/BME280/Humidity'
+    name: 'Master Bedroom - Humidity'
+    unit_of_measurement: '%'
+  - platform: mqtt
+    state_topic: '/ESPEasy_FiasRoom/BME280/Temperature'
+    name: 'Fias Bedroom - Temperature'
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    state_topic: '/ESPEasy_FiasRoom/BME280/Humidity'
+    name: 'Fias Bedroom - Humidity'
     unit_of_measurement: '%'
   - platform: mqtt
     state_topic: '/ESPEasy_Office/BMP280/Temperature'
     name: 'Office - Temperature'
-    unit_of_measurement: °C
+    unit_of_measurement: "°C"
   - platform: mqtt
     state_topic: '/ESPEasy_Office/BMP280/Pressure'
     name: 'Office - Pressure'
@@ -161,7 +174,9 @@ sensor:
   - platform: mqtt
     state_topic: '/ESPEasy_Livingroom/BMP280/Temperature'
     name: 'Livingroom - Temperature'
-    unit_of_measurement: °C
+    unit_of_measurement: "°C"
+    json_attributes:
+      - Temperature
   - platform: mqtt
     state_topic: '/ESPEasy_Livingroom/BMP280/Pressure'
     name: 'Livingroom - Pressure'
@@ -169,7 +184,7 @@ sensor:
   - platform: mqtt
     state_topic: 'wemosd1mini/kitchen/SENSOR'
     name: 'Kitchen - Temperature'
-    unit_of_measurement: °C
+    unit_of_measurement: "°C"
     value_template: '{{ value_json.BME280.Temperature }}'
   - platform: mqtt
     state_topic: 'wemosd1mini/kitchen/SENSOR'
@@ -221,11 +236,46 @@ switch:
   - platform: mqtt
     name: "Back lights"
     command_topic: "sonoff/outside_lights_back/cmnd/POWER"
-    state_topic: "sonoff/outside_lights_back/RESULT"
+    state_topic: "sonoff/outside_lights_back/POWER"
     payload_on: "ON"
     payload_off: "OFF"
+    retain: false
+#    value_template: "{{ value_json.POWER }}"
+  - platform: mqtt
+    name: "Heating on off"
+    command_topic: "sonoff/boiler_switch/cmnd/POWER"
+    state_topic: "sonoff/boiler_switch/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: false
+  - platform: mqtt
+    name: "Master Bedroom cold"
+    command_topic: "heating/master_bedroom_cold"
+    qos: 1
+    payload_on: "true"
+    payload_off: "false"
     retain: true
-    value_template: "{{ value_json.POWER }}"
+  - platform: mqtt
+    name: "Fias Bedroom cold"
+    command_topic: "heating/fias_bedroom_cold"
+    qos: 1
+    payload_on: "true"
+    payload_off: "false"
+    retain: true
+  - platform: mqtt
+    name: "Living room cold"
+    command_topic: "heating/living_room_cold"
+    qos: 1
+    payload_on: "true"
+    payload_off: "false"
+    retain: true
+  - platform: mqtt
+    name: "20 minute boost"
+    command_topic: "heating/boost20"
+    qos: 1
+    payload_on: "true"
+    payload_off: "false"
+    retain: true
 
 ################################################
 ## Cameras
