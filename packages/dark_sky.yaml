@@ -1,0 +1,21 @@
+weather:
+  - platform: darksky
+    api_key: ac64d84d35686129a1df238b8c570cf3
+    mode: daily
+    forecast:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    monitored_conditions:
+      - summary
+      - precip_type
+      - temperature
+      - wind_speed
+      - wind_gust
+      - humidity
+      - pressure
+    units: uk
+    update_interval:
+      minutes: 5

@@ -1,0 +1,296 @@
+resources:
+  - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=1
+    type: module
+  - url: /local/custom-lovelace/gauge-card/gauge-card.js?v=1
+    type: js
+
+title: Endsleigh HA
+views:
+  - title: Home
+    icon: mdi:castle
+    cards:
+      - type: glance
+        title: Room Lights
+        columns: 3
+        show_name: true
+        show_state: false
+        entities:
+          - entity: light.bedroom
+            tap_action: toggle
+          - entity: light.kitchen
+            tap_action: toggle
+          - entity: light.garage
+            tap_action: toggle
+          - entity: light.hall
+            tap_action: toggle
+          - entity: light.living_room
+            tap_action: toggle
+          - entity: light.office
+            tap_action: toggle
+      - type: glance
+        title: House switches
+        column_width: calc(100% / 6)
+        show_name: true
+        show_state: false
+        entities:
+          - entity: switch.back_lights
+            tap_action: toggle
+          - entity: switch.kettle
+            tap_action: toggle
+          - entity: switch.attic_lamp
+            tap_action: toggle
+      - type: entity-button
+        title: Heating boost
+        entity: switch.20_minute_boost
+        tap_action: toggle
+      - type: glance
+        title: Room Temperatures
+        entities:
+          - sensor.master_bedroom__temperature
+          - sensor.kitchen__temperature
+          - sensor.attic_hall_temperature
+          - sensor.outside_temperature
+          - sensor.shed_temperature
+          - sensor.office__temperature
+          - sensor.livingroom__temperature
+      - type: glance
+        title: Who's home?
+        entities:
+          - device_tracker.andrew_p7
+          - device_tracker.life360__matt
+          - device_tracker.matts_zte_phone
+          - device_tracker.noreens_vernee_mix2
+          - device_tracker.life360__noreen
+          - device_tracker.carmels_ipad
+          - device_tracker.dads_oneplus_2
+          - device_tracker.carmels_iphone7
+          - device_tracker.frankobnsiphone
+      - type: picture-glance
+        title: Driveway Camera
+        camera_image: camera.driveway_camera
+        entities:
+          - sensor.gate_lux
+          - sensor.outside_temperature
+      - type: iframe
+        url: https://embed.windy.com/embed2.html
+        aspect_ratio: 75%
+      - type: weather-forecast
+        entity: weather.dark_sky
+  - title: Hall
+   # panel: true
+    cards:
+      - type: light
+        entity: light.downstairs_hall_lamp
+      - type: light
+        entity: light.landing_light
+      - type: light
+        entity: light.attic_stairs_light
+      - type: glance
+        title: Hall Temperatures
+        entities:
+          - sensor.outside_temperature
+          - sensor.attic_hall_temperature
+      - type: history-graph
+        title: Brightness outside
+        hours_to_show: 168
+        refresh_interval: 3600
+        entities:
+          - entity: sensor.gate_lux
+            name: Outside light reading
+            unit_of_measurement: lux
+      - type: history-graph
+        title: Gate motion
+        hours_to_show: 168
+        refresh_interval: 3600
+        entities:
+          - entity: sensor.gate_motion
+            name: Gate motion
+      - type: picture-glance
+        title: Driveway Camera
+        camera_image: camera.driveway_camera
+        entities:
+          - sensor.gate_lux
+          - sensor.outside_temperature
+
+  - title: Living Room
+   # panel: true
+    cards:
+      - type: custom:thermostat-card
+        entity: climate.livingroom
+      - type: custom:gauge-card
+        title: Livingroom Temp
+        entity: sensor.livingroom__temperature
+        unit_of_measurement: C
+        max: 30
+        severity:
+          red: 24
+          green: 19
+          yellow: 0
+      - type: entity-button
+        title: Heating boost
+        entity: switch.20_minute_boost
+        tap_action: toggle
+      - type: light
+        entity: light.wine_rack_lamp
+      - type: light
+        entity: light.sofa_light
+      - type: history-graph
+        title: Heating usage
+        hours_to_show: 168
+        refresh_interval: 3600
+        entities:
+          - entity: sensor.heating_on_today
+            name: Heating on time
+          - entity: switch.heating_on_off
+            name: Heating Status
+      - type: history-graph
+        title: TV usage
+        hours_to_show: 168
+        refresh_interval: 3600
+        entities:
+          - entity: sensor.livingroom_tv_current_w
+            name: TV power usage
+          - entity: sensor.tv_on_today
+            name: TV Status
+  - title: Bedroom
+    cards:
+      - type: custom:thermostat-card
+        entity: climate.master_bedroom
+      - type: custom:gauge-card
+        title: Bedroom Temp
+        entity: sensor.master_bedroom__temperature
+        unit_of_measurement: C
+        max: 30
+        severity:
+          red: 21
+          green: 19
+          yellow: 0
+      - type: entity-button
+        title: Heating boost
+        entity: switch.20_minute_boost
+        tap_action: toggle
+  - title: Kitchen
+    cards:
+      - type: entities
+        title: Kitchen lights/switches
+        show_header_toggle: false
+        entities:
+          - entity: switch.kettle
+          - entity: light.indian_lamp
+      - type: custom:gauge-card
+        title: Kitchn Temp
+        entity: sensor.kitchen__temperature
+        unit_of_measurement: C
+        max: 30
+        severity:
+          red: 21
+          green: 19
+          yellow: 0
+      - type: history-graph
+        title: Kitchen Temp
+        entities: 
+          - entity: sensor.kitchen__temperature
+      - type: history-graph
+        title: Kettle power
+        entities: 
+          - entity: sensor.kettle_current_w
+      - type: picture-glance
+        title: Kitchen Camera
+        camera_image: camera.kitchen_camera
+        entities:
+          - sensor.kitchen__temperature
+  - title: Office
+    cards:
+      - type: glance
+        title: Office switches
+        entities:
+          - entity: switch.attic_lamp
+      - type: gauge
+        title: Office Temp
+        entity: sensor.office__temperature
+        unit_of_measurement: C
+        max: 30
+        severity:
+        red: 24
+        green: 0
+        yellow: 22
+      - type: history-graph
+        title: Office Temp
+        entities: 
+          - entity: sensor.office__temperature
+
+  - title: Shed
+    cards:
+      - type: entities
+        entities:
+          - light.shed
+      - type: gauge
+        title: Shed Temp
+        entity: sensor.shed_temperature
+        unit_of_measurement: C
+        max: 30
+        severity:
+        red: 24
+        green: 0
+        yellow: 22
+      - type: history-graph
+        title: Shed Temp
+        entities: 
+          - entity: sensor.shed_temperature
+
+  - title: System
+    icon: mdi:console
+    cards:
+      - type: glance
+        title: Server Status
+        entities:
+          - sensor.external_ip
+          - sensor.ha_uptime
+          #- sensor.installed_version
+          - sensor.disk_use_percent_
+          - sensor.memory_free
+          - sensor.since_last_boot
+          - sensor.last_boot
+          - sensor.load_1m
+          - sensor.cert_expiry
+      - type: history-graph
+        title: Heating usage
+        entities:
+          - sensor.heating_total
+      - type: entities
+        title: Automation
+        entities:
+          - automation.alert_when_dryer_is_done
+          - automation.set_heating_to_home_when_people_are_home
+          - automation.turn_off_lights__heating_10_mins_after_everyone_leaves
+          - automation.turn_on_lights_when_home_if_after_sunset
+          - automation.turn_on_lights_when_sunset_if_someones_home
+          - automation.turn_on_livingroom_lights_when_sunset_if_tv_on
+          - automation.turn_on_livingroom_lights_when_tv_turns_on_if_after_sunset
+          - automation.wake_up_the_bedroom
+          - automation.turn_on_hall_light_if_sundown_on_weekday_morning
+          - automation.turn_on_hall_light_if_sundown_on_weekend_morning
+          - automation.turn_off_hall_light_if_bright_outside
+          - automation.turn_off_attic_light_at_night_time
+          - automation.turn_on_outside_lights_if_dark
+          - automation.turn_off_fan_when_cool_enough
+      - type: entities
+        title: Heating Automation
+        entities:
+          - automation.bedroom_heat_off__8pm8am
+          - automation.bedroom_heat_on__8pm8am
+          - automation.living_room_heat_off__8am8pm
+          - automation.living_room_heat_on__8am8pm
+          - automation.turn_off_boost
+          - automation.turn_on_boost
+          - automation.20_minute_boost
+      - type: entities
+        title: Heating debug
+        show_header_toggle: false
+        entities:
+          - switch.heating_on_off
+          - switch.living_room_cold
+          - switch.fias_bedroom_cold
+          - switch.master_bedroom_cold
+          - switch.20_minute_boost
+          - sensor.heating_on_today
