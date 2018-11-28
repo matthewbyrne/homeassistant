@@ -10,12 +10,7 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Dublin
-  packages: !include_dir_named packages
-  customize:
-    sensor.gate_motion:
-      entity_picture: /local/Gate.JPG
-    sensor.downstairs_thermostat_temperature:
-      friendly_name: Master Bedroom Temperature
+  packages: !include_dir_named packages    
 
 #  configuration:
 
@@ -72,12 +67,6 @@ nest:
 
 shopping_list:
 
-notify:
-  - name: kitchen_tablet
-    platform: lannouncer
-    host: 192.168.0.20
-
 influxdb:
   username: home-assistant
   password: !secret influxdb_password
-
