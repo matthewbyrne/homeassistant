@@ -17,7 +17,11 @@ automation:
           - switch.attic_light
       - service: climate.set_away_mode
         data:
-          entity_id: climate.downstairs
+          entity_id: 
+            - climate.downstairs
+            - climate.livingroom
+            - climate.fias_bedroom
+            - climate.master_bedroom
           away_mode: true
 
   - alias: Set heating to home when people are home
@@ -28,7 +32,11 @@ automation:
     action:
       - service: climate.set_away_mode
         data:
-          entity_id: climate.downstairs
+          entity_id: 
+            - climate.downstairs
+            - climate.livingroom
+            - climate.fias_bedroom
+            - climate.master_bedroom
           away_mode: false
 
   - alias: Turn on lights when home if after sunset
@@ -43,10 +51,6 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
-      - service: climate.set_away_mode
-        data: 
-          entity_id: climate.downstairs
-          away_mode: false
 
   - alias: Turn on lights when sunset if someones home
     trigger:
@@ -61,10 +65,6 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
-      - service: climate.set_away_mode
-        data: 
-          entity_id: climate.downstairs
-          away_mode: false
 
   - alias: Turn on hall light if sundown on weekday morning
     trigger:
@@ -129,11 +129,11 @@ automation:
       - service: light.turn_on
         data:
           entity_id: light.wine_rack_lamp
-          brightness_pct: 50
+          brightness_pct: 30
       - service: light.turn_on
         data:
           entity_id: light.sofa_light
-          brightness_pct: 35
+          brightness_pct: 20
 
   - alias: Turn on livingroom lights when TV turns on if after sunset
     trigger:
@@ -212,6 +212,8 @@ automation:
       - condition: state
         entity_id: group.people
         state: 'home'
+      - condition: time
+        after: '16:00:00'
     action:
       - service: switch.turn_on
         entity_id: switch.back_lights
