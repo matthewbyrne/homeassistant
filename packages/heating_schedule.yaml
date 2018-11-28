@@ -1,0 +1,123 @@
+automation:
+### BEDROOM HEATING
+  - alias: Bedroom heat ON - 8pm-8am
+    trigger:
+      platform: time
+      minutes: '/1'
+      seconds: 00
+    condition: 
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.people
+          state: home
+        - condition: state
+          entity_id: switch.master_bedroom_cold
+          state: 'on'
+        - condition: time
+          after: '20:00:00'
+          before: '07:30:00'
+    action:
+      - service: switch.turn_on
+        entity_id:
+          - switch.heating_on_off
+
+  - alias: Bedroom heat OFF - 8pm-8am
+    trigger:
+      platform: time
+      minutes: '/1'
+      seconds: 00
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.master_bedroom_cold
+          state: 'off'
+        - condition: time
+          after: '20:00:00'
+          before: '07:30:00'
+        - condition: state
+          entity_id: switch.20_minute_boost
+          state: 'off'
+    action:
+      - service: switch.turn_off
+        entity_id:
+          - switch.heating_on_off
+
+### LIVING ROOM HEATING
+  - alias: Living room heat ON - 8am-8pm
+    trigger:
+      platform: time
+      minutes: '/1'
+      seconds: 00
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.people
+          state: home
+        - condition: state
+          entity_id: switch.living_room_cold
+          state: 'on'
+        - condition: time
+          after: '07:30:00'
+          before: '20:00:00'
+    action:
+      - service: switch.turn_on
+        entity_id:
+          - switch.heating_on_off
+
+  - alias: Living room heat OFF - 8am-8pm
+    trigger:
+      platform: time
+      minutes: '/1'
+      seconds: 00
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.living_room_cold
+          state: 'off'
+        - condition: time
+          after: '07:30:00'
+          before: '20:00:00'
+        - condition: state
+          entity_id: switch.20_minute_boost
+          state: 'off'
+    action:
+      - service: switch.turn_off
+        entity_id:
+          - switch.heating_on_off
+
+### BOOST
+  - alias: turn on boost
+    trigger:
+      platform: state
+      entity_id: switch.20_minute_boost
+      to: 'on'
+    action:
+      - service: switch.turn_on
+        entity_id: switch.heating_on_off
+ 
+  - alias: turn off boost
+    trigger:
+      platform: state
+      entity_id: switch.20_minute_boost
+      to: 'off'
+    action:
+      - service: switch.turn_off
+        entity_id: switch.heating_on_off
+
+  - alias: 20 minute boost
+    trigger:
+      platform: state
+      entity_id: switch.20_minute_boost
+      to: 'on'
+      for:
+        minutes: 20
+    action:
+      - service: switch.turn_off
+        entity_id: 
+          - switch.heating_on_off
+          - switch.20_minute_boost
+
