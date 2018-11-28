@@ -19,4 +19,9 @@ device_tracker:
     host: 192.168.0.23
     verify_ssl: false
 
+  - platform: life360
+    username: !secret life360_user
+    password: !secret life360_pass
+    prefix: life360_
+
 map:
