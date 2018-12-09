@@ -21,3 +21,7 @@ homeassistant:
       icon: mdi:lightbulb-on-outline
     switch.living_room_tv:
       icon: mdi:television
+    switch.christmas_tree:
+      icon: mdi:pine-tree
+    switch.20_minute_boost:
+      icon: mdi:radiator

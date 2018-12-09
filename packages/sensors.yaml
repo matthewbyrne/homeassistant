@@ -191,6 +191,9 @@ sensor:
     name: 'Kitchen - Humidity'
     unit_of_measurement: '%'
     value_template: '{{ value_json.BME280.Humidity }}'
+  - platform: mqtt
+    name: "Test Topic"
+    state_topic: "/ESPEasy_Testing/PIR/PIR"
 
 
 ################################################
@@ -242,6 +245,13 @@ switch:
     retain: false
 #    value_template: "{{ value_json.POWER }}"
   - platform: mqtt
+    name: "Christmas Tree"
+    command_topic: "sonoff/Extension_Lead_1/cmnd/POWER"
+    state_topic: "sonoff/Extension_Lead_1/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: false
+  - platform: mqtt
     name: "Heating on off"
     command_topic: "sonoff/boiler_switch/cmnd/POWER"
     state_topic: "sonoff/boiler_switch/POWER"
@@ -275,19 +285,18 @@ switch:
     qos: 1
     payload_on: "true"
     payload_off: "false"
-    retain: true
+    retain: true  
 
 ################################################
 ## Cameras
 ################################################
 camera:
-  - platform: generic
-    name: Kitchen Camera Image
-    still_image_url: http://192.168.0.25/tmpfs/auto.jpg
-    username: admin
-    password: !secret camera_password
   - platform: ffmpeg
-    input: rtsp://admin:Matches1!@192.168.0.25/11
+    name: Living Room Camera
+    input: !secret living_room_camera_rtsp
+    extra_arguements: -q:v 2-32
+  - platform: ffmpeg
+    input: !secret kitchen_camera_rtsp
     name: Kitchen Camera
   - platform: ffmpeg
     input: !secret front_camera_rtsp

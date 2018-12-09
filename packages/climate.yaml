@@ -5,15 +5,18 @@ climate:
     target_sensor: sensor.livingroom__temperature
     away_temp: 12
     cold_tolerance: 0.1
+    hot_tolerance: 0.2
   - platform: generic_thermostat
     name: Fias bedroom
     heater: switch.fias_bedroom_cold
     target_sensor: sensor.fias_bedroom__temperature
     away_temp: 12
     cold_tolerance: 0.1
+    hot_tolerance: 0.2
   - platform: generic_thermostat
     name: Master Bedroom
     heater: switch.master_bedroom_cold
     target_sensor: sensor.master_bedroom__temperature
     away_temp: 12
     cold_tolerance: 0.1
+    hot_tolerance: 0.2

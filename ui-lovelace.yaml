@@ -39,6 +39,8 @@ views:
             tap_action: toggle
           - entity: switch.attic_lamp
             tap_action: toggle
+          - entity: switch.christmas_tree
+            tap_action: toggle
       - type: entity-button
         title: Heating boost
         entity: switch.20_minute_boost
@@ -130,6 +132,10 @@ views:
         title: Heating boost
         entity: switch.20_minute_boost
         tap_action: toggle
+      - type: entity-button
+        title: Christmas Tree
+        entity: switch.christmas_tree
+        tap_action: toggle
       - type: light
         entity: light.wine_rack_lamp
       - type: light
@@ -152,6 +158,11 @@ views:
             name: TV power usage
           - entity: sensor.tv_on_today
             name: TV Status
+      - type: picture-glance
+        title: Living Room Camera
+        camera_image: camera.living_room_camera
+        entities:
+          - sensor.livingroom__temperature
   - title: Bedroom
     cards:
       - type: custom:thermostat-card
@@ -262,7 +273,7 @@ views:
         entities:
           - automation.alert_when_dryer_is_done
           - automation.set_heating_to_home_when_people_are_home
-          - automation.turn_off_lights__heating_10_mins_after_everyone_leaves
+          - automation.turn_off_lights__heating_after_everyone_leaves
           - automation.turn_on_lights_when_home_if_after_sunset
           - automation.turn_on_lights_when_sunset_if_someones_home
           - automation.turn_on_livingroom_lights_when_sunset_if_tv_on

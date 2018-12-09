@@ -4,7 +4,7 @@ group:
     entities:
       - automation.alert_when_dryer_is_done
       - automation.set_heating_to_home_when_people_are_home
-      - automation.turn_off_lights__heating_10_mins_after_everyone_leaves
+      - automation.turn_off_lights__heating_after_everyone_leaves
       - automation.turn_on_lights_when_home_if_after_sunset
       - automation.turn_on_lights_when_sunset_if_someones_home
       - automation.turn_on_livingroom_lights_when_sunset_if_tv_on

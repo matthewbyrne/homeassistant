@@ -2,19 +2,18 @@
 ## Automation
 ################################################
 automation:
-  - alias: Turn off lights & heating 10 mins after everyone leaves
+  - alias: Turn off lights & heating after everyone leaves
     trigger:
       platform: state
       entity_id: group.people
       to: 'not_home'
-      for:
-        minutes: 10
     action:
       - service: light.turn_off
         entity_id: group.all_lights
       - service: switch.turn_off
         entity_id: 
           - switch.attic_light
+          - switch.christmas_tree
       - service: climate.set_away_mode
         data:
           entity_id: 
@@ -51,6 +50,9 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
+      - service: switch.turn_on
+        entity_id: 
+          - switch.christmas_tree
 
   - alias: Turn on lights when sunset if someones home
     trigger:
@@ -65,6 +67,9 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.downstairs_hall_lamp
+      - service: switch.turn_on
+        entity_id: 
+          - switch.christmas_tree
 
   - alias: Turn on hall light if sundown on weekday morning
     trigger:
@@ -201,6 +206,7 @@ automation:
         entity_id:
           - switch.attic_lamp
           - switch.back_lights
+          - switch.christmas_tree
 
   - alias: Turn on outside lights if dark
     trigger:
